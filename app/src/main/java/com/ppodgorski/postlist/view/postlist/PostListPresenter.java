@@ -6,9 +6,9 @@ import com.ppodgorski.postlist.network.ApiService;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+
+import static com.ppodgorski.postlist.utils.RxTransformers.androidIO;
 
 @ActivityScoped
 public class PostListPresenter implements PostListContract.Presenter {
@@ -37,8 +37,7 @@ public class PostListPresenter implements PostListContract.Presenter {
     @Override
     public void getPosts() {
         mCompositeDisposable.add(mApiService.getPosts()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(androidIO())
                 .doOnSubscribe(__ -> mPostListView.showLoadingIndicator())
                 .doOnSubscribe(__ -> mPostListView.hidePosts())
                 .doOnTerminate(() -> mPostListView.hideLoadingIndicator())

@@ -23,4 +23,12 @@ public class Post {
     @SerializedName("body")
     String body;
 
+    public String getTitle() {
+        return title.substring(0,1).toUpperCase() + title.substring(1);
+    }
+
+    public String getBody() {
+        return body.substring(0,1).toUpperCase() + body.substring(1);
+    }
+
 }

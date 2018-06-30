@@ -1,10 +1,7 @@
 package com.ppodgorski.postlist.view.base;
 
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.view.View;
-import android.widget.TextView;
 
 import com.ppodgorski.postlist.R;
 
