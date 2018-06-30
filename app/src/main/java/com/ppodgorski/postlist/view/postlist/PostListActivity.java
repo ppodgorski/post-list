@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ppodgorski.postlist.R;
+import com.ppodgorski.postlist.model.Post;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,15 +19,20 @@ public class PostListActivity extends DaggerAppCompatActivity implements PostLis
     PostListPresenter mPresenter;
 
     @Override
+    public void showPosts(List<Post> posts) {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_list);
-        ButterKnife.bind(this);
+        setupLayout();
     }
 
     @Override
     public void onResume() {
         mPresenter.takeView(this);
+        mPresenter.getPosts();
         super.onResume();
     }
 
@@ -33,5 +41,11 @@ public class PostListActivity extends DaggerAppCompatActivity implements PostLis
         super.onPause();
         mPresenter.dropView();
     }
+
+    private void setupLayout() {
+        setContentView(R.layout.activity_post_list);
+        ButterKnife.bind(this);
+    }
+
 
 }
