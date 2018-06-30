@@ -14,6 +14,7 @@ import com.ppodgorski.postlist.view.base.BaseActivity;
 import com.ppodgorski.postlist.view.postdetails.PostDetailsActivity;
 import com.ppodgorski.postlist.view.postlist.recycler.PostClickListener;
 import com.ppodgorski.postlist.view.postlist.recycler.PostListAdapter;
+import com.ppodgorski.postlist.view.provider.IntentProvider;
 
 import java.util.List;
 
@@ -41,6 +42,9 @@ public class PostListActivity extends BaseActivity implements PostListContract.V
     @Inject
     PostListAdapter mPostListAdapter;
 
+    @Inject
+    IntentProvider mIntentProvider;
+
     @OnClick(R.id.retry_button)
     public void retryButtonClicked() {
         mRetryButton.setVisibility(View.GONE);
@@ -49,8 +53,7 @@ public class PostListActivity extends BaseActivity implements PostListContract.V
 
     @Override
     public void onPostClicked(Post post) {
-        Intent intent = new Intent(this, PostDetailsActivity.class);
-        startActivity(intent);
+        startActivity(mIntentProvider.postDetailsIntent(this, post.getId()));
     }
 
     @Override

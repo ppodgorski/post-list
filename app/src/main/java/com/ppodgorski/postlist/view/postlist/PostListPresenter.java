@@ -1,27 +1,21 @@
 package com.ppodgorski.postlist.view.postlist;
 
-import android.support.annotation.Nullable;
 
 import com.ppodgorski.postlist.di.scope.ActivityScoped;
-import com.ppodgorski.postlist.model.Post;
 import com.ppodgorski.postlist.network.ApiService;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 @ActivityScoped
 public class PostListPresenter implements PostListContract.Presenter {
 
     private PostListContract.View mPostListView;
 
-    private Disposable mDisposable;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private ApiService mApiService;
 
     @Inject
@@ -36,19 +30,19 @@ public class PostListPresenter implements PostListContract.Presenter {
 
     @Override
     public void dropView() {
-        mDisposable.dispose();
+        mCompositeDisposable.clear();
         mPostListView = null;
     }
 
     @Override
     public void getPosts() {
-        mDisposable = mApiService.getPosts()
+        mCompositeDisposable.add(mApiService.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(__ -> mPostListView.showLoadingIndicator())
                 .doOnSubscribe(__ -> mPostListView.hidePosts())
                 .doOnTerminate(() -> mPostListView.hideLoadingIndicator())
-                .subscribe(mPostListView::showPosts, t -> mPostListView.showError());
+                .subscribe(mPostListView::showPosts, t -> mPostListView.showError()));
     }
 
 
