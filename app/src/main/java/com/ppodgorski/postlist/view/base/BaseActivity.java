@@ -2,6 +2,7 @@ package com.ppodgorski.postlist.view.base;
 
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +16,19 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 R.string.network_error, Snackbar.LENGTH_SHORT);
         snackbar.show();
+    }
+
+    protected void setupToolbar(android.support.v7.widget.Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

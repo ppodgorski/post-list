@@ -11,6 +11,7 @@ public interface PostListContract {
     interface View extends BaseView<Presenter> {
 
         void showPosts(List<Post>posts);
+        void hidePosts();
         void showLoadingIndicator();
         void hideLoadingIndicator();
         void showError();

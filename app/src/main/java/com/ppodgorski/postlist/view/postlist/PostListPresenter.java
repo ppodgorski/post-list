@@ -42,11 +42,11 @@ public class PostListPresenter implements PostListContract.Presenter {
 
     @Override
     public void getPosts() {
-        mPostListView.showLoadingIndicator();
         mDisposable = mApiService.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(__ -> mPostListView.showLoadingIndicator())
+                .doOnSubscribe(__ -> mPostListView.hidePosts())
                 .doOnTerminate(() -> mPostListView.hideLoadingIndicator())
                 .subscribe(mPostListView::showPosts, t -> mPostListView.showError());
     }

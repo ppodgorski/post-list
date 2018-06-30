@@ -1,5 +1,6 @@
 package com.ppodgorski.postlist.view.postlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import com.ppodgorski.postlist.R;
 import com.ppodgorski.postlist.model.Post;
 import com.ppodgorski.postlist.view.base.BaseActivity;
+import com.ppodgorski.postlist.view.postdetails.PostDetailsActivity;
 import com.ppodgorski.postlist.view.postlist.recycler.PostClickListener;
 import com.ppodgorski.postlist.view.postlist.recycler.PostListAdapter;
 
@@ -47,13 +49,19 @@ public class PostListActivity extends BaseActivity implements PostListContract.V
 
     @Override
     public void onPostClicked(Post post) {
-        Timber.d(post.toString());
+        Intent intent = new Intent(this, PostDetailsActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void showPosts(List<Post> posts) {
         mRecyclerView.setVisibility(View.VISIBLE);
         mPostListAdapter.setPosts(posts);
+    }
+
+    @Override
+    public void hidePosts() {
+        mRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
@@ -79,15 +87,15 @@ public class PostListActivity extends BaseActivity implements PostListContract.V
     }
 
     @Override
-    public void onResume() {
+    public void onStart() {
         mPresenter.takeView(this);
         mPresenter.getPosts();
-        super.onResume();
+        super.onStart();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         mPresenter.dropView();
     }
 
