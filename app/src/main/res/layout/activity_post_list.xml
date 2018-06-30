@@ -10,6 +10,7 @@
         android:id="@+id/post_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
         android:scrollbars="vertical"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />

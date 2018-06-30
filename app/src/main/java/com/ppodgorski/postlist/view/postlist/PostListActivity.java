@@ -98,8 +98,6 @@ public class PostListActivity extends BaseActivity implements PostListContract.V
     }
 
     private void setupRecycler() {
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setAdapter(mPostListAdapter);
     }
 
