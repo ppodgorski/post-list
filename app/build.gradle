@@ -55,6 +55,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$project.supportLibraryVersion"
     implementation "com.android.support:support-v4:$project.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$project.supportLibraryVersion"
+    implementation "com.android.support:design:$project.supportLibraryVersion"
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"

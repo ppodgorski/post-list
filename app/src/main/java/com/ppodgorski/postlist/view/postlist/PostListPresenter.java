@@ -3,7 +3,10 @@ package com.ppodgorski.postlist.view.postlist;
 import android.support.annotation.Nullable;
 
 import com.ppodgorski.postlist.di.scope.ActivityScoped;
+import com.ppodgorski.postlist.model.Post;
 import com.ppodgorski.postlist.network.ApiService;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,7 +19,6 @@ import timber.log.Timber;
 @ActivityScoped
 public class PostListPresenter implements PostListContract.Presenter {
 
-    @Nullable
     private PostListContract.View mPostListView;
 
     private Disposable mDisposable;
@@ -40,9 +42,14 @@ public class PostListPresenter implements PostListContract.Presenter {
 
     @Override
     public void getPosts() {
+        mPostListView.showLoadingIndicator();
         mDisposable = mApiService.getPosts()
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(posts -> Timber.d(posts.toString()));
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(__ -> mPostListView.showLoadingIndicator())
+                .doOnTerminate(() -> mPostListView.hideLoadingIndicator())
+                .subscribe(mPostListView::showPosts, t -> mPostListView.showError());
     }
+
+
 }
