@@ -114,18 +114,13 @@ public class PostDetailsActivity extends BaseActivity implements PostDetailsCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupLayout();
-    }
-
-    @Override
-    public void onStart() {
         mPresenter.takeView(this);
         mPresenter.getData();
-        super.onStart();
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         mPresenter.dropView();
     }
 

@@ -83,18 +83,13 @@ public class PostListActivity extends BaseActivity implements PostListContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupLayout();
-    }
-
-    @Override
-    public void onStart() {
         mPresenter.takeView(this);
         mPresenter.getPosts();
-        super.onStart();
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         mPresenter.dropView();
     }
 
